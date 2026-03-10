@@ -61,4 +61,32 @@ export class EventsModule {
     async getPriceHistory(eventId: string, params?: { from?: string; to?: string }): Promise<unknown> {
         return this.client.get(`/v1/pm/events/${eventId}/price-history`, params as Record<string, unknown>);
     }
+
+    /**
+     * List all available event series.
+     * A series is a group of recurring events e.g. "BTC 1h price predictions"
+     *
+     * @example
+     * const { series } = await bayse.events.listSeries({ page: 1, size: 10 })
+     */
+    async listSeries(params?: { page?: number; size?: number }): Promise<unknown> {
+        return this.client.get('/v1/pm/series', params as Record<string, unknown>);
+    }
+
+
+    /**
+     * Get all events belonging to a specific series.
+     *
+     * @example
+     * const events = await bayse.events.getSeriesEvents('crypto-btc-1h')
+     */
+    async getSeriesEvents(
+        seriesSlug: string,
+        params?: ListEventsParams
+    ): Promise<{ events: Event[]; pagination: Pagination }> {
+        return this.client.get(
+            `/v1/pm/series/${seriesSlug}/events`,
+            params as Record<string, unknown>
+        );
+    }
 }
