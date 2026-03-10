@@ -60,7 +60,7 @@ export class BayseHttpClient {
 
     // --- Authenticated POST (full HMAC signature) ---------------
 
-    async post<T>(path: string, body?: Record<string, unknown>): Promise<T> {
+    async post<T>(path: string, body?: object): Promise<T> {
         const bodyStr = body ? JSON.stringify(body) : null;
         const writeHeaders = generateWriteAuthHeaders(this.secretKey, 'POST', path, bodyStr);
 

@@ -199,6 +199,12 @@ export interface ListEventsParams {
     seriesSlug?: string;
 }
 
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    pagination: Pagination;
+}
+
 export interface ListOrdersParams {
     page?: number;
     size?: number;
@@ -237,4 +243,58 @@ export class BayseNotFoundError extends BayseApiError {
         super(404, 'not_found', message);
         this.name = 'BayseNotFoundError';
     }
+}
+
+// --- Ticker ---------------------------------------------------
+export interface Ticker {
+    marketId: string;
+    outcomeId: string;
+    lastPrice: number;
+    volume24h: number;
+    high24h: number;
+    low24h: number;
+    priceChange24h: number;
+}
+
+// --- Order Book -----------------------------------------------
+export interface OrderBookLevel {
+    price: number;
+    quantity: number;
+    total: number;
+}
+
+export interface OrderBook {
+    marketId: string;
+    outcomeId: string;
+    timestamp: string;
+    bids: OrderBookLevel[];
+    asks: OrderBookLevel[];
+    lastTradedPrice: number;
+    lastTradedSide: 'BUY' | 'SELL';
+}
+
+// --- Trades ---------------------------------------------------
+export interface Trade {
+    id: string;
+    marketId: string;
+    outcomeId: string;
+    side: OrderSide;
+    price: number;
+    quantity: number;
+    amount: number;
+    currency: Currency;
+    createdAt: string;
+}
+
+export interface ListTradesParams {
+    marketId?: string;
+    outcomeId?: string;
+    page?: number;
+    size?: number;
+}
+
+// --- Order Book Params ----------------------------------------
+export interface GetOrderBookParams {
+    outcomeIds: string[];
+    currency?: Currency;
 }
