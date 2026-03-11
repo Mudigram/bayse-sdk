@@ -8,6 +8,10 @@ import {
   ListOrdersParams,
 } from '../types';
 
+/**
+ * Orders Module
+ */
+
 export class OrdersModule {
   constructor(private client: BayseHttpClient) { }
 

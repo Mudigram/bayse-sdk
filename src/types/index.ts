@@ -153,10 +153,17 @@ export interface QuoteBody {
 }
 
 export interface QuoteResponse {
-    expectedPrice: number;
-    expectedShares: number;
-    fee: number;
-    total: number;
+    price: number;               // the execution price
+    amount: number;              // amount you're spending
+    fee: number;                 // trading fee
+    quantity: number;            // shares you'll receive
+    currentMarketPrice: number;  // current YES/NO price
+    costOfShares: number;        // total cost
+    profitPercentage: number;    // potential profit %
+    completeFill: boolean;       // will order fill completely
+    priceImpactAbsolute: number; // how much your order moves the price
+    currencyBaseMultiplier: number;
+    tradeGoesOverMaxLiability: boolean;
 }
 
 // --- Portfolio & Positions ------------------------------------
@@ -175,13 +182,47 @@ export interface Portfolio {
     positions: Position[];
 }
 
+export interface Activity {
+    id: string;
+    marketId: string;
+    eventId: string;
+    side: OrderSide;
+    outcome: OrderOutcome;
+    amount: number;
+    price: number;
+    currency: Currency;
+    createdAt: string;
+}
+
 // --- Wallet ---------------------------------------------------
 
+export interface WalletAddress {
+    id: string;
+    address: string;
+    asset: string;
+    network: string;
+    provider: string;
+    symbol: string;
+    createdAt: string;
+    updatedAt: string;
+    user: string;
+}
+
 export interface WalletAsset {
-    currency: Currency;
-    balance: number;
-    lockedBalance: number;
+    id: string;
+    symbol: string;
+    network: string;
     availableBalance: number;
+    pendingBalance: number;
+    isDefault: boolean;
+    isLocalCurrencyAsset: boolean;
+    depositActivity: string;
+    wagerActivity: string;
+    withdrawalActivity: string;
+    addresses: WalletAddress[];
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 // --- List Events Params ---------------------------------------

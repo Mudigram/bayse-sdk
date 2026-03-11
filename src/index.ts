@@ -1,5 +1,12 @@
 import { BayseHttpClient } from './client';
 import { EventsModule } from './modules/events';
+import { MarketsModule } from './modules/markets';
+import { OrdersModule } from './modules/orders';
+import { PortfolioModule } from './modules/portfolio';
+import { WalletsModule } from './modules/wallet';
+import { SystemModule } from './modules/system';
+import { MarketsStream } from './websocket/markets';
+import { RealtimeStream } from './websocket/realtime';
 import { BayseConfig } from './types';
 
 // ============================================================
@@ -18,6 +25,15 @@ import { BayseConfig } from './types';
 
 export class BayseClient {
     public events: EventsModule;
+    public markets: MarketsModule;
+    public orders: OrdersModule;
+    public portfolio: PortfolioModule;
+    public wallet: WalletsModule;
+    public system: SystemModule;
+    public stream = {
+        markets: () => new MarketsStream(),
+        realtime: () => new RealtimeStream(),
+    };
 
     // More modules get added here in Week 2:
     // public markets: MarketsModule
@@ -33,6 +49,11 @@ export class BayseClient {
         const http = new BayseHttpClient(config);
 
         this.events = new EventsModule(http);
+        this.markets = new MarketsModule(http);
+        this.orders = new OrdersModule(http);
+        this.portfolio = new PortfolioModule(http);
+        this.wallet = new WalletsModule(http);
+        this.system = new SystemModule(http);
     }
 }
 
