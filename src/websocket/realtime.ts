@@ -61,6 +61,12 @@ export class RealtimeStream {
         }));
     }
 
+    disconnect(): void {
+        this.subscriptions.clear();  // remove all callbacks
+        this.ws?.close();            // close the connection
+        this.ws = null;              // clean up the reference
+    }
+
     private reconnect(): void {
         // exponential backoff reconnect
         const delay = Math.min(Math.pow(2, this.reconnectAttempt), 30) * 1000;
