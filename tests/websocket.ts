@@ -27,7 +27,7 @@ async function runWebSocketTest() {
     // Step 2: Test markets stream
     console.log('📡 Connecting to markets stream...\n');
     const marketsStream = bayse.stream.markets();
-    marketsStream.connect();
+    await marketsStream.connect();
 
     // Subscribe to prices
     marketsStream.subscribePrices(event.id, (data) => {
@@ -44,7 +44,7 @@ async function runWebSocketTest() {
     // Step 3: Test realtime stream — USD/NGN rate
     console.log('📡 Connecting to realtime stream (USD/NGN rate)...\n');
     const realtimeStream = bayse.stream.realtime();
-    realtimeStream.connect();
+    await realtimeStream.connect();
 
     realtimeStream.subscribeAssetPrices(['USDNGN'], (data) => {
         console.log('🇳🇬 USD/NGN rate update:');

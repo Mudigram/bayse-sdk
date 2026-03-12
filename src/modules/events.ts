@@ -1,5 +1,6 @@
 import { BayseHttpClient } from '../client';
 import { Event, ListEventsParams, Pagination } from '../types';
+import { validateId } from '../utils';
 
 // ============================================================
 // Events Module
@@ -38,6 +39,7 @@ export class EventsModule {
      * const event = await bayse.events.getById('a1b2c3d4-...')
      */
     async getById(eventId: string): Promise<Event> {
+        validateId(eventId, 'eventId'); // ← add this
         return this.client.get<Event>(`/v1/pm/events/${eventId}`);
     }
 
@@ -48,6 +50,7 @@ export class EventsModule {
      * const event = await bayse.events.getBySlug('super-eagles-afcon-2026')
      */
     async getBySlug(slug: string): Promise<Event> {
+        validateId(slug, 'slug');
         return this.client.get<Event>(`/v1/pm/events/slug/${slug}`);
     }
 

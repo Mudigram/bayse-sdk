@@ -7,6 +7,7 @@ import {
   AmmOrder,
   ListOrdersParams,
 } from '../types';
+import { validateAmount, validateId } from '../utils';
 
 /**
  * Orders Module
@@ -48,6 +49,9 @@ export class OrdersModule {
    * });
    */
   async place(eventId: string, marketId: string, body: PlaceOrderBody): Promise<PlaceOrderResponse> {
+    validateId(eventId, 'eventId');
+    validateId(marketId, 'marketId');
+    validateAmount(body.amount, body.currency ?? 'USD');
     return this.client.post<PlaceOrderResponse>(`/v1/pm/events/${eventId}/markets/${marketId}/orders`, body);
   }
 
@@ -58,6 +62,7 @@ export class OrdersModule {
    * const order = await bayse.orders.cancel('a1b2c3d4-...')
    */
   async cancel(orderId: string): Promise<unknown> {
+    validateId(orderId, 'orderId');
     return this.client.delete(`/v1/pm/orders/${orderId}`);
   }
 }

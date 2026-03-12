@@ -10,6 +10,7 @@ import {
     Pagination,
     Currency,
 } from '../types';
+import { validateId, validateAmount } from '../utils';
 
 // ============================================================
 // Markets Module
@@ -71,6 +72,9 @@ export class MarketsModule {
      * const quote = await bayse.markets.getQuote('a1b2c3d4-...', 'b1c2d3e4-...', { outcomeId: 'c1d2e3f4-...', quantity: 10 });
      */
     async getQuote(eventId: string, marketId: string, body: QuoteBody): Promise<QuoteResponse> {
+        validateId(marketId, 'marketId');
+        validateId(eventId, 'eventId');
+        validateAmount(body.amount, body.currency ?? 'USD');
         return this.client.post(`/v1/pm/events/${eventId}/markets/${marketId}/quote`, body);
     }
 

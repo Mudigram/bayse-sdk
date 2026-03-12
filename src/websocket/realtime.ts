@@ -7,25 +7,29 @@ export class RealtimeStream {
     private reconnectAttempt = 0;
 
 
-    connect(): void {
-        this.ws = new WebSocket(this.url);
+    connect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.ws = new WebSocket(this.url);
 
-        this.ws.on('open', () => {
-            console.log('[bayse-sdk] WebSocket connected');
-            this.reconnectAttempt = 0;
-        });
+            this.ws.on('open', () => {
+                console.log('[bayse-sdk] WebSocket connected');
+                this.reconnectAttempt = 0;
+                resolve(); // ← connection is ready, tell the awaiter
+            });
 
-        this.ws.on('message', (data) => {
-            this.handleMessage(data.toString());
-        });
+            this.ws.on('message', (data) => {
+                this.handleMessage(data.toString());
+            });
 
-        this.ws.on('close', () => {
-            console.log('[bayse-sdk] WebSocket disconnected. Reconnecting...');
-            this.reconnect();
-        });
+            this.ws.on('close', () => {
+                console.log('[bayse-sdk] WebSocket disconnected. Reconnecting...');
+                this.reconnect();
+            });
 
-        this.ws.on('error', (error) => {
-            console.error('[bayse-sdk] WebSocket error:', error.message);
+            this.ws.on('error', (error) => {
+                console.error('[bayse-sdk] WebSocket error:', error.message);
+                reject(error); // ← connection failed, tell the awaiter
+            });
         });
     }
 

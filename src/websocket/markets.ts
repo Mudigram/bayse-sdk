@@ -5,26 +5,37 @@ export class MarketsStream {
     private url = 'wss://socket.bayse.markets/ws/v1/markets';
     private subscriptions: Map<string, (data: unknown) => void> = new Map();
     private reconnectAttempt = 0;
+    public onError?: (message: string) => void;
 
-    connect(): void {
-        this.ws = new WebSocket(this.url);
 
-        this.ws.on('open', () => {
-            console.log('[bayse-sdk] WebSocket connected');
-            this.reconnectAttempt = 0;
-        });
 
-        this.ws.on('message', (data) => {
-            this.handleMessage(data.toString());
-        });
 
-        this.ws.on('close', () => {
-            console.log('[bayse-sdk] WebSocket disconnected. Reconnecting...');
-            this.reconnect();
-        });
 
-        this.ws.on('error', (error) => {
-            console.error('[bayse-sdk] WebSocket error:', error.message);
+
+
+    connect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.ws = new WebSocket(this.url);
+
+            this.ws.on('open', () => {
+                console.log('[bayse-sdk] WebSocket connected');
+                this.reconnectAttempt = 0;
+                resolve(); // ← connection is ready, tell the awaiter
+            });
+
+            this.ws.on('message', (data) => {
+                this.handleMessage(data.toString());
+            });
+
+            this.ws.on('close', () => {
+                console.log('[bayse-sdk] WebSocket disconnected. Reconnecting...');
+                this.reconnect();
+            });
+
+            this.ws.on('error', (error) => {
+                console.error('[bayse-sdk] WebSocket error:', error.message);
+                reject(error); // ← connection failed, tell the awaiter
+            });
         });
     }
 
@@ -95,6 +106,13 @@ export class MarketsStream {
                         callback(msg.data);
                     }
                 });
+
+                if (msg.type === 'error') {
+                    const errorMessage = msg.data?.message ?? 'Unknown WebSocket error';
+                    console.error('[bayse-sdk] WebSocket error from server:', errorMessage);
+                    this.onError?.(errorMessage); // ← call developer's error handler if set
+                    continue;
+                }
 
             } catch {
                 console.error('[bayse-sdk] Failed to parse message:', line);

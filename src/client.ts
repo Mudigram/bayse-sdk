@@ -8,6 +8,7 @@ import {
     BayseNotFoundError,
 } from './types';
 
+import { validateId } from './utils';
 // ============================================================
 // Bayse HTTP Client
 //
@@ -134,7 +135,6 @@ export class BayseHttpClient {
         }
     }
 }
-
 // Helper: pause execution for ms milliseconds
 function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
