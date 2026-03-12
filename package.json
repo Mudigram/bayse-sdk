@@ -1,6 +1,6 @@
 {
   "name": "bayse-markets-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript SDK for the Bayse Markets prediction market API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
