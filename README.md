@@ -1,4 +1,4 @@
-# Bayse SDK
+# Bayse-Markets SDK
 
 [![npm version](https://badge.fury.io/js/bayse-markets-sdk.svg)](https://badge.fury.io/js/bayse-markets-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
