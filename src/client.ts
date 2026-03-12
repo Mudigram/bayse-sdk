@@ -106,7 +106,7 @@ export class BayseHttpClient {
             // 429 — Rate limited. Wait retryAfter seconds, then retry once.
             if (status === 429 && retryCount === 0) {
                 const retryAfter = data?.retryAfter ?? 1;
-                console.warn(`[bayse-sdk] Rate limited. Retrying in ${retryAfter}s...`);
+                console.warn(`[bayse-markets-sdk] Rate limited. Retrying in ${retryAfter}s...`);
                 await sleep(retryAfter * 1000);
                 return this.request<T>(config, retryCount + 1);
             }

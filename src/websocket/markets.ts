@@ -18,7 +18,7 @@ export class MarketsStream {
             this.ws = new WebSocket(this.url);
 
             this.ws.on('open', () => {
-                console.log('[bayse-sdk] WebSocket connected');
+                console.log('[bayse-markets-sdk] WebSocket connected');
                 this.reconnectAttempt = 0;
                 resolve(); // ← connection is ready, tell the awaiter
             });
@@ -28,12 +28,12 @@ export class MarketsStream {
             });
 
             this.ws.on('close', () => {
-                console.log('[bayse-sdk] WebSocket disconnected. Reconnecting...');
+                console.log('[bayse-markets-sdk] WebSocket disconnected. Reconnecting...');
                 this.reconnect();
             });
 
             this.ws.on('error', (error) => {
-                console.error('[bayse-sdk] WebSocket error:', error.message);
+                console.error('[bayse-markets-sdk] WebSocket error:', error.message);
                 reject(error); // ← connection failed, tell the awaiter
             });
         });
@@ -109,13 +109,13 @@ export class MarketsStream {
 
                 if (msg.type === 'error') {
                     const errorMessage = msg.data?.message ?? 'Unknown WebSocket error';
-                    console.error('[bayse-sdk] WebSocket error from server:', errorMessage);
+                    console.error('[bayse-markets-sdk] WebSocket error from server:', errorMessage);
                     this.onError?.(errorMessage); // ← call developer's error handler if set
                     continue;
                 }
 
             } catch {
-                console.error('[bayse-sdk] Failed to parse message:', line);
+                console.error('[bayse-markets-sdk] Failed to parse message:', line);
             }
         }
     }
@@ -125,7 +125,7 @@ export class MarketsStream {
         const delay = Math.min(Math.pow(2, this.reconnectAttempt), 30) * 1000;
         this.reconnectAttempt++;
 
-        console.log(`[bayse-sdk] Reconnecting in ${delay / 1000}s (attempt ${this.reconnectAttempt})`);
+        console.log(`[bayse-markets-sdk] Reconnecting in ${delay / 1000}s (attempt ${this.reconnectAttempt})`);
 
         // Wait, then hand off to connect()
         setTimeout(() => {

@@ -1,6 +1,6 @@
 # Bayse SDK
 
-[![npm version](https://badge.fury.io/js/bayse-sdk.svg)](https://badge.fury.io/js/bayse-sdk)
+[![npm version](https://badge.fury.io/js/bayse-markets-sdk.svg)](https://badge.fury.io/js/bayse-markets-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A TypeScript SDK for the Bayse Markets prediction market API. Bayse is Nigeria's premier prediction market platform where users can trade on real-world events and outcomes.
@@ -17,7 +17,7 @@ A TypeScript SDK for the Bayse Markets prediction market API. Bayse is Nigeria's
 ## Installation
 
 ```bash
-npm install bayse-sdk
+npm install bayse-markets-sdk
 ```
 
 ## Quick Start
@@ -31,7 +31,7 @@ npm install bayse-sdk
 ### 2. Initialize the Client
 
 ```typescript
-import BayseClient from 'bayse-sdk';
+import BayseClient from 'bayse-markets-sdk';
 
 const bayse = new BayseClient({
   publicKey: process.env.BAYSE_PUBLIC_KEY!,
@@ -234,7 +234,7 @@ import {
   BayseAuthError,
   BayseRateLimitError,
   BayseNotFoundError
-} from 'bayse-sdk';
+} from 'bayse-markets-sdk';
 
 try {
   const result = await bayse.events.getAll();
@@ -334,8 +334,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - 📖 [Documentation](https://docs.bayse.markets)
-- 🐛 [Issues](https://github.com/Mudigram/bayse-sdk/issues)
-- 💬 [Discussions](https://github.com/Mudigram/bayse-sdk/discussions)
+- 🐛 [Issues](https://github.com/Mudigram/bayse-markets-sdk/issues)
+- 💬 [Discussions](https://github.com/Mudigram/bayse-markets-sdk/discussions)
 
 ---
 

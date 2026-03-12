@@ -40,10 +40,10 @@ export class MarketsModule {
      */
     async getOrderBook(outcomeIds: string[], currency?: Currency): Promise<OrderBook[]> {
         if (outcomeIds.length === 0) {
-            throw new Error('[bayse-sdk] getOrderBook requires at least one outcomeId');
+            throw new Error('[bayse-markets-sdk] getOrderBook requires at least one outcomeId');
         }
         if (outcomeIds.length > 10) {
-            throw new Error('[bayse-sdk] getOrderBook accepts a maximum of 10 outcomeIds');
+            throw new Error('[bayse-markets-sdk] getOrderBook accepts a maximum of 10 outcomeIds');
         }
 
         // Build query string manually because axios doesn't repeat keys by default

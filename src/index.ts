@@ -13,7 +13,7 @@ import { BayseConfig } from './types';
 // Bayse SDK — Main Entry Point
 //
 // Usage:
-//   import BayseClient from 'bayse-sdk'
+//   import BayseClient from 'bayse-markets-sdk'
 //
 //   const bayse = new BayseClient({
 //     publicKey: process.env.BAYSE_PUBLIC_KEY!,
@@ -43,8 +43,8 @@ export class BayseClient {
     // public stream: { markets(): ..., realtime(): ... }
 
     constructor(config: BayseConfig) {
-        if (!config.publicKey) throw new Error('[bayse-sdk] publicKey is required');
-        if (!config.secretKey) throw new Error('[bayse-sdk] secretKey is required');
+        if (!config.publicKey) throw new Error('[bayse-markets-sdk] publicKey is required');
+        if (!config.secretKey) throw new Error('[bayse-markets-sdk] secretKey is required');
 
         const http = new BayseHttpClient(config);
 
